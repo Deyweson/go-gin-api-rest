@@ -20,7 +20,7 @@ func Saudacao(c *gin.Context) {
 	nome := c.Params.ByName("nome")
 
 	c.JSON((200), gin.H{
-		"API diz:": "Olá " + nome + ", tudo bem ?",
+		"API diz": "Olá " + nome + ", tudo bem?",
 	})
 }
 
@@ -28,6 +28,13 @@ func RegistrarAluno(c *gin.Context) {
 	var aluno models.Aluno
 
 	if err := c.ShouldBindJSON(&aluno); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Error": err.Error(),
+		})
+		return
+	}
+
+	if err := models.ValidarAluno(&aluno); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Error": err.Error(),
 		})
@@ -69,6 +76,12 @@ func EditarAluno(c *gin.Context) {
 	db.DB.First(&aluno, id)
 
 	if err := c.ShouldBindJSON(&aluno); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Error": err.Error(),
+		})
+		return
+	}
+	if err := models.ValidarAluno(&aluno); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Error": err.Error(),
 		})
