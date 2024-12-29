@@ -8,10 +8,3 @@ type Aluno struct {
 	CPF  string `json:"cpf"`
 	RG   string `json:"rg"`
 }
-
-var Alunos = []Aluno{
-	{Nome: "aluno1", CPF: "123", RG: "123"},
-	{Nome: "aluno1", CPF: "123", RG: "123"},
-	{Nome: "aluno1", CPF: "123", RG: "123"},
-	{Nome: "aluno1", CPF: "123", RG: "123"},
-}
