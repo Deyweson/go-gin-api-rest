@@ -99,11 +99,26 @@ func BuscarAlunoPorCPF(c *gin.Context) {
 
 	if aluno.ID == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
-			"Message": "Aluno não encontrado",
+			"mensagem": "Aluno não encontrado",
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, aluno)
 
+}
+
+func ExibePaginaIndex(c *gin.Context) {
+
+	var alunos []models.Aluno
+
+	db.DB.Find(&alunos)
+
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"alunos": alunos,
+	})
+}
+
+func NotFound(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "404.html", nil)
 }
